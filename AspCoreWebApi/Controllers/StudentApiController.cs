@@ -10,41 +10,48 @@ namespace AspCoreWebApi.Controllers
     public class StudentApiController : ControllerBase
     {
         private readonly MyDbContext context;
+        private readonly ILogger<StudentApiController> logger;
 
-        public StudentApiController(MyDbContext context)
+        public StudentApiController(MyDbContext context, ILogger<StudentApiController> logger)
         {
             this.context = context;
+            this.logger = logger;
         }
         [HttpGet]
         public async Task<ActionResult<List<Student>>> GetStudentlist()
         {
-            try
-            {
+            
+                logger.LogInformation("Getting All Students");
                 var data = await context.Students.ToListAsync();
-
+                logger.LogInformation($"Students: {data}");
                 return Ok(data);
-            }
-            catch (Exception ex) 
-            {
-                return BadRequest(ex.Message);
-            }
+            
+            
         }
 
-        [HttpPost]
-        public async Task<ActionResult<List<Student>>> GetStudent(
-    [FromQuery] string? city)
-        {
-            var query = context.Students.AsQueryable();
+    //    [HttpPost("city")]
+    //    public ActionResult GetStudentByCity(
+    //[FromBody] string? city)
 
-            if (!string.IsNullOrEmpty(city))
-            {
-                query = query.Where(x => x.City == city);
-            }
+    //    {
+    //        try
+    //        {
+    //            var query = context.Students.AsQueryable();
 
-            var data = await query.ToListAsync();
+    //            if (!string.IsNullOrEmpty(city))
+    //            {
+    //                query = query.Where(x => x.City == city);
+    //            }
 
-            return Ok(data);
-        }
+    //            var data =  query.ToListAsync();
+
+    //            return Ok(data);
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            return BadRequest(ex.Message);
+    //        }
+    //    }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudentById(int id)
