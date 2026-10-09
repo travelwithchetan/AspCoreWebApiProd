@@ -30,21 +30,21 @@ namespace AspCoreWebApi.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<ActionResult<List<Student>>> GetStudent(
-    [FromQuery] string? city)
-        {
-            var query = context.Students.AsQueryable();
+    //    [HttpPost]
+    //    public async Task<ActionResult<List<Student>>> GetStudent(
+    //[FromQuery] string? city)
+    //    {
+    //        var query = context.Students.AsQueryable();
 
-            if (!string.IsNullOrEmpty(city))
-            {
-                query = query.Where(x => x.City == city);
-            }
+    //        if (!string.IsNullOrEmpty(city))
+    //        {
+    //            query = query.Where(x => x.City == city);
+    //        }
 
-            var data = await query.ToListAsync();
+    //        var data = await query.ToListAsync();
 
-            return Ok(data);
-        }
+    //        return Ok(data);
+    //    }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudentById(int id)
@@ -80,7 +80,7 @@ namespace AspCoreWebApi.Controllers
             return Ok(std);
 
         }
-
+        #region DeleteMethod
         [HttpDelete]
         public async Task<ActionResult<Student>> Deletestudent(int id)
         {
@@ -94,7 +94,7 @@ namespace AspCoreWebApi.Controllers
             return Ok();
 
         }
-
+        #endregion
 
 
     }
