@@ -1,3 +1,4 @@
+using AspCoreWebApi.Middleware;
 using AspCoreWebApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<MyDbContext>(item => item.UseSqlServer(config.GetC
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddlewarecs>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
