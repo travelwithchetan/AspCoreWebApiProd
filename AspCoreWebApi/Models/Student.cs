@@ -17,7 +17,7 @@ public partial class Student
 
     public DateOnly? DateOfBirth { get; set; }
 
-    public string? City { get; set; }
+    public string City { get; set; }
 
     public DateTime? CreatedDate { get; set; }
 }

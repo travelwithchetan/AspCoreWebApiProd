@@ -96,6 +96,40 @@ namespace AspCoreWebApi.Controllers
         }
         #endregion
 
+        #region GetDataUsingPostMethod//FromBody and Query Param
 
+        [HttpPost("{city}")]
+        public async Task<IActionResult> GetStudentDetailsCityWise(string city)
+        {
+            var cityData = await context.Students
+                .Where(s => s.City == city)
+                .ToListAsync();
+
+            if (cityData.Count == 0)
+            {
+                return NotFound("No students found in this city.");
+            }
+
+            return Ok(cityData);
+        }
+        //[HttpPost("Search")]
+        //public IActionResult Search([FromBody] Student std) 
+        //{
+        //    string city = std.City;
+        //    return Ok(city);
+        //}
+        [HttpPost("SearchByCity")]
+        public async Task<IActionResult> SearchByCity([FromQuery]string city) 
+        {
+            var students = await context.Students.Where(s => s.City == city).ToListAsync();
+            if (students == null) 
+            {
+                return NotFound("No student found in this city");
+            }
+            return Ok(students);
+        }
+
+
+        #endregion
     }
 }
