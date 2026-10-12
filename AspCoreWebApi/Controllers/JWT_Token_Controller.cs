@@ -40,7 +40,8 @@ namespace AspCoreWebApi.Controllers
             {
                 return Unauthorized("Invalid username or password");
             }
-
+            //changes12102026
+            // ye wala code temperory basis pe comment kiya hai
             // 2. Password hash verify karo
             //var result = _passwordHasher.VerifyHashedPassword(
             //    user,
@@ -51,6 +52,7 @@ namespace AspCoreWebApi.Controllers
             //{
             //    return Unauthorized("Invalid username or password");
             //}
+            //chnages12102026
 
             // 3. JWT claims
             var claims = new[]
