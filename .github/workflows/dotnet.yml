@@ -15,20 +15,36 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      # 1. Checkout source code
       - name: Checkout code
         uses: actions/checkout@v6
 
+      # 2. Install .NET 8 SDK
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '8.0.x'
 
+      # 3. Restore dependencies
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore ./AspCoreWebApi/AspCoreWebApi.csproj
 
+      # 4. Build application
       - name: Build application
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ./AspCoreWebApi/AspCoreWebApi.csproj --configuration Release --no-restore
 
+      # 5. Run tests
       - name: Run tests
         run: dotnet test --configuration Release
 
+      # 6. Publish API
+      - name: Publish API
+        run: dotnet publish ./AspCoreWebApi/AspCoreWebApi.csproj --configuration Release --no-build --output ./publish
+
+      # 7. Upload published artifact
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aspnetcore-api
+          path: ./publish/
+          if-no-files-found: error
